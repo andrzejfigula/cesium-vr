@@ -1,7 +1,7 @@
 "use strict";
 
 var lofi = true;
-var vrEnabled = false;
+var vrEnabled = true;
 
 var canvasL = document.createElement('canvas');
 canvasL.className = "fullSize";
@@ -231,28 +231,27 @@ function run() {
 
   var onTouch = function(e) {
     // Checks for double taps...
-    // if (tapTimeout == null) {
-    //   // First tap... set timeout callback, cancelling double tap if timed out.
-    //   tapTimeout = setTimeout(function() {
-    //     // Single tap!
-    //     tapTimeout = null;
-    //   }, DOUBLETAP_TIME);
-    //
-    //   // Setup hold timeout callback...
-    //   holdTimeout = setTimeout(function() {
-    //     // Cycle through locations...
-    //     nextLocation();
-    //     // Cancel a double tap after a hold
-    //     tapTimeout = null;
-    //   }, HOLDTAP_TIME);
-    // } else {
-    //   // Double tap!
-    //   clearTimeout(tapTimeout);
-    //   tapTimeout = null;
-    //   // Go full screen...
-    //
-    // }
-    cesiumVR.goFullscreenVR(container);
+    if (tapTimeout == null) {
+      // First tap... set timeout callback, cancelling double tap if timed out.
+      tapTimeout = setTimeout(function() {
+        // Single tap!
+        tapTimeout = null;
+      }, DOUBLETAP_TIME);
+
+      // Setup hold timeout callback...
+      holdTimeout = setTimeout(function() {
+        // Cycle through locations...
+        nextLocation();
+        // Cancel a double tap after a hold
+        tapTimeout = null;
+      }, HOLDTAP_TIME);
+    } else {
+      // Double tap!
+      clearTimeout(tapTimeout);
+      tapTimeout = null;
+      // Go full screen...
+      cesiumVR.goFullscreenVR(container);
+    }
     e.preventDefault();
   };
 
